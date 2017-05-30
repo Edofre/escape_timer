@@ -23,11 +23,20 @@ class Testing(tk.Tk):
                  fg='blue', relief='raised', bd=3).pack(fill='x', padx=5, pady=5)
 
         # Create the start timer button, remove it after it's clicked
-        tk.Button(self, text='Count Start', command=self.count_down).pack()
+        self.start_button = tk.Button(self, text='Count Start', command=self.count_down)
+        self.start_button.pack()
 
         self.labelVariable = tk.StringVar()
         tk.Label(self, textvariable=self.labelVariable).pack()
-        self.labelVariable.set("Enter the code to stop the timer. \n If the code is not correct you will lose time!")
+        self.labelVariable.set(
+            "Enter the password to stop the timer. \n If the code is not correct you will lose time!")
+
+        # Create the password field
+        self.entryVariable = tk.StringVar()
+        self.entry = tk.Entry(self, textvariable=self.entryVariable)
+        self.entry.pack()
+        self.entry.bind("<Return>", self.on_enter)
+        self.entryVariable.set(u"Enter password here.")
 
         # Add a button that enables the user to enter the code
         tk.Button(self, text='Enter code', command=self.on_click).pack()
@@ -41,13 +50,21 @@ class Testing(tk.Tk):
             sf = "{:02d}:{:02d}".format(*divmod(t, 60))
             # print(sf)  # test
             self.time_str.set(sf)
+
+            # Remove the button
+            self.start_button.destroy()
+
             self.update()
             # delay one second
             time.sleep(1)
 
     def on_click(self):
-        self.labelVariable.set(self.entryVariable.get() + " (You clicked the button)")
-        self.passwordVariable.set(self.id_generator())
+        self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        self.entry.focus_set()
+        self.entry.selection_range(0, tk.END)
+
+    def on_enter(self, event):
+        self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
 
