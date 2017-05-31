@@ -19,7 +19,7 @@ class Testing(tk.Tk):
         # create the time display label, give it a large font
         # label auto-adjusts to the font
         label_font = ('helvetica', 40)
-        tk.Label(self, textvariable=self.time_str, font=label_font, bg='white',
+        self.timer_label = tk.Label(self, textvariable=self.time_str, font=label_font, bg='white',
                  fg='blue', relief='raised', bd=3).pack(fill='x', padx=5, pady=5)
 
         # Create the start timer button, remove it after it's clicked
@@ -50,21 +50,21 @@ class Testing(tk.Tk):
             sf = "{:02d}:{:02d}".format(*divmod(t, 60))
             # print(sf)  # test
             self.time_str.set(sf)
-
             # Remove the button
             self.start_button.destroy()
-
             self.update()
             # delay one second
-            time.sleep(1)
+            self.after(60)
 
     def on_click(self):
         self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        self.entryVariable.set("")
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
 
     def on_enter(self, event):
         self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        self.entryVariable.set("")
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
 
