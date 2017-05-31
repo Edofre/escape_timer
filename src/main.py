@@ -1,12 +1,11 @@
 __author__ = 'Edo Freriks'
+__app_name__ = 'Escape Group Finance & Risk'
 
 '''
 
 '''
 
 import Tkinter as tk
-import time
-
 
 class Testing(tk.Tk):
     def __init__(self, parent):
@@ -15,6 +14,9 @@ class Testing(tk.Tk):
         self.initialize()
 
     def initialize(self):
+        ## Set a fixed width and height
+        self.resizable(width=False, height=False)
+
         self.time_str = tk.StringVar()
         # create the time display label, give it a large font
         # label auto-adjusts to the font
@@ -57,19 +59,25 @@ class Testing(tk.Tk):
             self.after(60)
 
     def on_click(self):
-        self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
-        self.entryVariable.set("")
-        self.entry.focus_set()
-        self.entry.selection_range(0, tk.END)
+        # self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        self.check_answer(self.entryVariable.get())
 
     def on_enter(self, event):
-        self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        # self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        self.check_answer(self.entryVariable.get())
+
+    def check_answer(self, answer):
+        if answer == 'asdasd':
+            self.labelVariable.set("CORRECT!")
+        else:
+            self.labelVariable.set("WRONG!")
+            # Remove 5 minutes from the time, we do not tolerate failure
+
         self.entryVariable.set("")
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
-
 
 if __name__ == "__main__":
     app = Testing(None)
-    app.title(__author__)
+    app.title(__app_name__)
     app.mainloop()
