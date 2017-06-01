@@ -12,6 +12,7 @@ class Testing(tk.Tk):
         tk.Tk.__init__(self, parent)
         self.parent = parent
         self.initialize()
+        self.time_left = 0
 
     def initialize(self):
         ## Set a fixed width and height
@@ -22,7 +23,7 @@ class Testing(tk.Tk):
         # label auto-adjusts to the font
         label_font = ('helvetica', 40)
         self.timer_label = tk.Label(self, textvariable=self.time_str, font=label_font, bg='white',
-                 fg='blue', relief='raised', bd=3).pack(fill='x', padx=5, pady=5)
+                 fg='red', relief='raised', bd=3).pack(fill='x', padx=5, pady=5)
 
         # Create the start timer button, remove it after it's clicked
         self.start_button = tk.Button(self, text='Count Start', command=self.count_down)
@@ -50,12 +51,12 @@ class Testing(tk.Tk):
         tk.Button(self, text='Enter code', command=self.on_click).pack()
         self.update()
 
-    def count_down(self):
+    def count_down(self, start_time=3600):
         # start with 60 minutes --> 3600 seconds
-        for t in range(3600, -1, -1):
+        for self.time_left in range(start_time, -1, -1):
             # format as 2 digit integers, fills with zero to the left
             # divmod() gives minutes, seconds
-            sf = "{:02d}:{:02d}".format(*divmod(t, 60))
+            sf = "{:02d}:{:02d}".format(*divmod(self.time_left, 60))
             # print(sf)  # test
             self.time_str.set(sf)
             # Remove the button
@@ -75,9 +76,13 @@ class Testing(tk.Tk):
     def check_answer(self, answer):
         if answer == 'asdasd':
             self.resultLabelVariable.set("CORRECT!")
+            # Stop the time!
+
         else:
-            self.resultLabelVariable.set("WRONG!")
+            self.resultLabelVariable.set("!!")
+            self.resultLabelVariable.set("WRONG! " + str(self.time_left))
             # Remove 5 minutes from the time, we do not tolerate failure
+            self.count_down(self.time_left - 60)
 
         self.entryVariable.set("")
         self.entry.focus_set()
