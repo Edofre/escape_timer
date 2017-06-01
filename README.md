@@ -1,6 +1,6 @@
 # Escape timer
 
-Simple timer that will count down untill the correct code has been entered
+Simple timer that will count down until the correct code has been entered
 
 ## Todo
 

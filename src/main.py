@@ -1,11 +1,13 @@
 __author__ = 'Edo Freriks'
 __app_name__ = 'Escape Group Finance & Risk'
+__escape_timer_key__ = 'asdasd'
 
 '''
-
+Basic countdown app to facilitate an escape room type project
 '''
 
 import Tkinter as tk
+
 
 class Testing(tk.Tk):
     def __init__(self, parent):
@@ -15,15 +17,14 @@ class Testing(tk.Tk):
         self.time_left = 0
 
     def initialize(self):
-        ## Set a fixed width and height
+        # Set a fixed width and height
         self.resizable(width=False, height=False)
 
         self.time_str = tk.StringVar()
-        # create the time display label, give it a large font
-        # label auto-adjusts to the font
+        # create the time display label, give it a large font, label auto-adjusts to the font
         label_font = ('helvetica', 40)
         self.timer_label = tk.Label(self, textvariable=self.time_str, font=label_font, bg='white',
-                 fg='red', relief='raised', bd=3).pack(fill='x', padx=5, pady=5)
+                                    fg='red', relief='raised', bd=3).pack(fill='x', padx=5, pady=5)
 
         # Create the start timer button, remove it after it's clicked
         self.start_button = tk.Button(self, text='Count Start', command=self.count_down)
@@ -48,16 +49,18 @@ class Testing(tk.Tk):
         self.entryVariable.set(u"Enter password here.")
 
         # Add a button that enables the user to enter the code
-        tk.Button(self, text='Enter code', command=self.on_click).pack()
+        self.enterButton = tk.Button(self, text='Enter code', command=self.on_click)
+        self.enterButton.pack()
         self.update()
 
+    # start with 60 minutes --> 3600 seconds
     def count_down(self, start_time=3600):
-        # start with 60 minutes --> 3600 seconds
+        # Reset the time left because we're entering the loop again
+        self.time_left = 0
+
         for self.time_left in range(start_time, -1, -1):
-            # format as 2 digit integers, fills with zero to the left
-            # divmod() gives minutes, seconds
+            # format as 2 digit integers, fills with zero to the left, divmod() gives minutes, seconds
             sf = "{:02d}:{:02d}".format(*divmod(self.time_left, 60))
-            # print(sf)  # test
             self.time_str.set(sf)
             # Remove the button
             self.start_button.destroy()
@@ -66,27 +69,42 @@ class Testing(tk.Tk):
             self.after(60)
 
     def on_click(self):
-        # self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        # Process the answer
         self.check_answer(self.entryVariable.get())
 
     def on_enter(self, event):
-        # self.labelVariable.set(self.entryVariable.get() + " (You pressed ENTER)")
+        # Process the answer
         self.check_answer(self.entryVariable.get())
 
     def check_answer(self, answer):
-        if answer == 'asdasd':
-            self.resultLabelVariable.set("CORRECT!")
-            # Stop the time!
+        # Make sure the time has not passed yet
+        if self.time_left >= 0:
+            if answer == __escape_timer_key__:
+                self.resultLabelVariable.set("CORRECT!")
+                # Stop the time!
 
+                # Remove the button
+                self.enterButton.destroy()
+                # And disable the textfield
+                self.entry.configure(state="disabled")
+            else:
+                self.resultLabelVariable.set("!!")
+                self.resultLabelVariable.set("WRONG! " + str(self.time_left))
+                # Remove a minute from the time, we do not tolerate failure
+                # self.count_down(self.time_left - 60)
+                calculated_time_left = self.time_left - 60
+                self.count_down(0 if calculated_time_left < 0 else calculated_time_left)
+                self.entryVariable.set("")
         else:
-            self.resultLabelVariable.set("!!")
-            self.resultLabelVariable.set("WRONG! " + str(self.time_left))
-            # Remove 5 minutes from the time, we do not tolerate failure
-            self.count_down(self.time_left - 60)
+            # Remove the button
+            self.enterButton.destroy()
+            # And disable the textfield
+            self.entry.configure(state="disabled")
+            self.entryVariable.set("TIME IS UP!")
 
-        self.entryVariable.set("")
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
+
 
 if __name__ == "__main__":
     app = Testing(None)
