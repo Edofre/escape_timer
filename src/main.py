@@ -28,10 +28,16 @@ class Testing(tk.Tk):
         self.start_button = tk.Button(self, text='Count Start', command=self.count_down)
         self.start_button.pack()
 
-        self.labelVariable = tk.StringVar()
-        tk.Label(self, textvariable=self.labelVariable).pack()
-        self.labelVariable.set(
-            "Enter the password to stop the timer. \n If the code is not correct you will lose time!")
+        # Label that contains the explanation
+        self.explanationLabelVariable = tk.StringVar()
+        tk.Label(self, textvariable=self.explanationLabelVariable).pack()
+        self.explanationLabelVariable.set(
+            "Press 'Enter' to enter the code and stop the timer. \n If the code is not correct you will lose time!")
+
+        # The label that will show the result
+        self.resultLabelVariable = tk.StringVar()
+        tk.Label(self, textvariable=self.resultLabelVariable).pack()
+        self.resultLabelVariable.set("")
 
         # Create the password field
         self.entryVariable = tk.StringVar()
@@ -45,7 +51,7 @@ class Testing(tk.Tk):
         self.update()
 
     def count_down(self):
-        # start with 60 minutes --> 360 seconds
+        # start with 60 minutes --> 3600 seconds
         for t in range(3600, -1, -1):
             # format as 2 digit integers, fills with zero to the left
             # divmod() gives minutes, seconds
@@ -68,9 +74,9 @@ class Testing(tk.Tk):
 
     def check_answer(self, answer):
         if answer == 'asdasd':
-            self.labelVariable.set("CORRECT!")
+            self.resultLabelVariable.set("CORRECT!")
         else:
-            self.labelVariable.set("WRONG!")
+            self.resultLabelVariable.set("WRONG!")
             # Remove 5 minutes from the time, we do not tolerate failure
 
         self.entryVariable.set("")
