@@ -54,7 +54,7 @@ class Testing(tk.Tk):
         self.update()
 
     # start with 60 minutes --> 3600 seconds
-    def count_down(self, start_time=3600):
+    def count_down(self, start_time=80):
         # Reset the time left because we're entering the loop again
         self.time_left = 0
 
@@ -67,6 +67,9 @@ class Testing(tk.Tk):
             self.update()
             # delay one second
             self.after(60)
+
+            if self.time_left <= 0:
+                break
 
     def on_click(self):
         # Process the answer
