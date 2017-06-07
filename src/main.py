@@ -49,12 +49,10 @@ class Testing(tk.Tk):
         self.entry_variable.set(u"Enter password here.")
 
         # Add a button that enables the user to enter the code
-        self.enter_button = tk.Button(self, text='Enter code', command=self.on_click)
-        self.enter_button.pack()
         self.update()
 
     # start with 60 minutes --> 3600 seconds
-    def count_down(self, start_time=80):
+    def count_down(self, start_time=3600):
         # Reset the time left because we're entering the loop again
         self.time_left = 0
 
@@ -84,10 +82,8 @@ class Testing(tk.Tk):
         if self.time_left >= 0:
             if answer == __escape_timer_key__:
                 self.result_label_variable.set("CORRECT!")
-                # Stop the time!
+                # Stop the time! TODO
 
-                # Remove the button
-                self.enter_button.destroy()
                 # And disable the textfield
                 self.entry.configure(state="disabled")
             else:
@@ -99,8 +95,6 @@ class Testing(tk.Tk):
                 self.count_down(0 if calculated_time_left < 0 else calculated_time_left)
                 self.entry_variable.set("")
         else:
-            # Remove the button
-            self.enter_button.destroy()
             # And disable the textfield
             self.entry.configure(state="disabled")
             self.entry_variable.set("TIME IS UP!")
