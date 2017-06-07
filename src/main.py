@@ -67,6 +67,7 @@ class Testing(tk.Tk):
             self.after(60)
 
             if self.time_left <= 0:
+                self.time_up()
                 break
 
     def on_click(self):
@@ -76,6 +77,10 @@ class Testing(tk.Tk):
     def on_enter(self, event):
         # Process the answer
         self.check_answer(self.entry_variable.get())
+
+    def time_up(self):
+        self.entry.configure(state="disabled")
+        self.entry_variable.set("TIME IS UP!")
 
     def check_answer(self, answer):
         # Make sure the time has not passed yet
@@ -96,12 +101,11 @@ class Testing(tk.Tk):
                 self.entry_variable.set("")
         else:
             # And disable the textfield
-            self.entry.configure(state="disabled")
-            self.entry_variable.set("TIME IS UP!")
+            self.time_up()
 
+        # Set focus on the entry field
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
-
 
 if __name__ == "__main__":
     app = Testing(None)
