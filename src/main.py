@@ -15,6 +15,7 @@ class Testing(tk.Tk):
         self.parent = parent
         self.initialize()
         self.time_left = 0
+        self.timer_running = True
 
     def initialize(self):
         # Set a fixed width and height
@@ -70,6 +71,10 @@ class Testing(tk.Tk):
                 self.time_up()
                 break
 
+            if not self.timer_running:
+                print(self.time_left)
+                break
+
     def on_click(self):
         # Process the answer
         self.check_answer(self.entry_variable.get())
@@ -87,7 +92,9 @@ class Testing(tk.Tk):
         if self.time_left >= 0:
             if answer == __escape_timer_key__:
                 self.result_label_variable.set("CORRECT!")
+
                 # Stop the time! TODO
+                self.timer_running = False
 
                 # And disable the textfield
                 self.entry.configure(state="disabled")
