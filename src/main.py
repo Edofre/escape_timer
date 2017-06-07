@@ -31,26 +31,26 @@ class Testing(tk.Tk):
         self.start_button.pack()
 
         # Label that contains the explanation
-        self.explanationLabelVariable = tk.StringVar()
-        tk.Label(self, textvariable=self.explanationLabelVariable).pack()
-        self.explanationLabelVariable.set(
+        self.explanation_label_variable = tk.StringVar()
+        tk.Label(self, textvariable=self.explanation_label_variable).pack()
+        self.explanation_label_variable.set(
             "Press 'Enter' to enter the code and stop the timer. \n If the code is not correct you will lose time!")
 
         # The label that will show the result
-        self.resultLabelVariable = tk.StringVar()
-        tk.Label(self, textvariable=self.resultLabelVariable).pack()
-        self.resultLabelVariable.set("")
+        self.result_label_variable = tk.StringVar()
+        tk.Label(self, textvariable=self.result_label_variable).pack()
+        self.result_label_variable.set("")
 
         # Create the password field
-        self.entryVariable = tk.StringVar()
-        self.entry = tk.Entry(self, textvariable=self.entryVariable)
+        self.entry_variable = tk.StringVar()
+        self.entry = tk.Entry(self, textvariable=self.entry_variable)
         self.entry.pack()
         self.entry.bind("<Return>", self.on_enter)
-        self.entryVariable.set(u"Enter password here.")
+        self.entry_variable.set(u"Enter password here.")
 
         # Add a button that enables the user to enter the code
-        self.enterButton = tk.Button(self, text='Enter code', command=self.on_click)
-        self.enterButton.pack()
+        self.enter_button = tk.Button(self, text='Enter code', command=self.on_click)
+        self.enter_button.pack()
         self.update()
 
     # start with 60 minutes --> 3600 seconds
@@ -70,37 +70,37 @@ class Testing(tk.Tk):
 
     def on_click(self):
         # Process the answer
-        self.check_answer(self.entryVariable.get())
+        self.check_answer(self.entry_variable.get())
 
     def on_enter(self, event):
         # Process the answer
-        self.check_answer(self.entryVariable.get())
+        self.check_answer(self.entry_variable.get())
 
     def check_answer(self, answer):
         # Make sure the time has not passed yet
         if self.time_left >= 0:
             if answer == __escape_timer_key__:
-                self.resultLabelVariable.set("CORRECT!")
+                self.result_label_variable.set("CORRECT!")
                 # Stop the time!
 
                 # Remove the button
-                self.enterButton.destroy()
+                self.enter_button.destroy()
                 # And disable the textfield
                 self.entry.configure(state="disabled")
             else:
-                self.resultLabelVariable.set("!!")
-                self.resultLabelVariable.set("WRONG! " + str(self.time_left))
+                self.result_label_variable.set("!!")
+                self.result_label_variable.set("WRONG! " + str(self.time_left))
                 # Remove a minute from the time, we do not tolerate failure
                 # self.count_down(self.time_left - 60)
                 calculated_time_left = self.time_left - 60
                 self.count_down(0 if calculated_time_left < 0 else calculated_time_left)
-                self.entryVariable.set("")
+                self.entry_variable.set("")
         else:
             # Remove the button
-            self.enterButton.destroy()
+            self.enter_button.destroy()
             # And disable the textfield
             self.entry.configure(state="disabled")
-            self.entryVariable.set("TIME IS UP!")
+            self.entry_variable.set("TIME IS UP!")
 
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
