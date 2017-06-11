@@ -42,7 +42,7 @@ class Testing(tk.Tk):
 
         # The label that will show the result
         self.result_label_variable = tk.StringVar()
-        tk.Label(self, textvariable=self.result_label_variable).pack()
+        tk.Label(self, textvariable=self.result_label_variable, font=label_font, fg='red').pack()
         self.result_label_variable.set("")
 
         # Create the password field
@@ -100,14 +100,14 @@ class Testing(tk.Tk):
             if answer.lower() == __escape_timer_key__:
                 self.result_label_variable.set("CORRECT!")
 
-                # Stop the time! TODO
+                # Stop the time!
                 self.timer_running = False
 
                 # And disable the textfield
                 self.entry.configure(state="disabled")
             else:
                 self.result_label_variable.set("!!")
-                self.result_label_variable.set("WRONG!")
+                self.result_label_variable.set(self.entry_variable.get() + " is wrong!")
                 # Remove a minute from the time, we do not tolerate failure
                 # self.count_down(self.time_left - 60)
                 # calculated_time_left = self.time_left - 60
