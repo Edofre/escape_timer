@@ -16,7 +16,7 @@ class Testing(tk.Tk):
         self.parent = parent
         self.initialize()
         # Set the time left, 3600 seconds = 60 minutes
-        self.time_left = 70
+        self.time_left = 3600
         self.timer_running = True
 
     def initialize(self):
