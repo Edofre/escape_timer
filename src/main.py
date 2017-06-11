@@ -18,9 +18,6 @@ class Testing(tk.Tk):
         self.timer_running = True
 
     def initialize(self):
-        # Set a fixed width and height
-        self.resizable(width=False, height=False)
-
         self.time_str = tk.StringVar()
         # create the time display label, give it a large font, label auto-adjusts to the font
         timer_font = ('helvetica', 140)
@@ -36,9 +33,9 @@ class Testing(tk.Tk):
 
         # Label that contains the explanation
         self.explanation_label_variable = tk.StringVar()
-        tk.Label(self, textvariable=self.explanation_label_variable, font=label_font).pack()
+        tk.Label(self, textvariable=self.explanation_label_variable, font=label_font).pack(padx=10, pady=10)
         self.explanation_label_variable.set(
-            "Press 'Enter' to enter the code and stop the timer.")
+            "Press 'Enter' to enter the code.")
 
         # The label that will show the result
         self.result_label_variable = tk.StringVar()
