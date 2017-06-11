@@ -7,8 +7,6 @@ Basic countdown app to facilitate an escape room type project
 '''
 
 import Tkinter as tk
-import threading
-
 
 class Testing(tk.Tk):
     def __init__(self, parent):
@@ -60,22 +58,14 @@ class Testing(tk.Tk):
 
     # start with 60 minutes --> 3600 seconds
     def count_down(self):
-        # Reset the time left because we're entering the loop again
-        # for self.time_left in range(start_time, -1, -1):
         # format as 2 digit integers, fills with zero to the left, divmod() gives minutes, seconds
         sf = "{:02d}:{:02d}".format(*divmod(self.time_left, 60))
         self.time_str.set(sf)
         # Remove the button
         self.start_button.destroy()
         # Update the time
-        # self.self.time_str.update()
         if self.time_left <= 0:
             self.time_up()
-            # break
-
-        if not self.timer_running:
-            print(self.time_left)
-            # break
 
         # If the timer is running keep counting down
         if self.timer_running:
@@ -133,7 +123,6 @@ class Testing(tk.Tk):
         # Set focus on the entry field
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
-
 
 if __name__ == "__main__":
     app = Testing(None)
