@@ -9,13 +9,14 @@ Basic countdown app to facilitate an escape room type project
 import Tkinter as tk
 import threading
 
+
 class Testing(tk.Tk):
     def __init__(self, parent):
         tk.Tk.__init__(self, parent)
         self.parent = parent
         self.initialize()
-        # Set the time left
-        self.time_left = 3600
+        # Set the time left, 3600 seconds = 60 minutes
+        self.time_left = 70
         self.timer_running = True
 
     def initialize(self):
@@ -61,7 +62,7 @@ class Testing(tk.Tk):
     def count_down(self):
         # Reset the time left because we're entering the loop again
         # for self.time_left in range(start_time, -1, -1):
-            # format as 2 digit integers, fills with zero to the left, divmod() gives minutes, seconds
+        # format as 2 digit integers, fills with zero to the left, divmod() gives minutes, seconds
         sf = "{:02d}:{:02d}".format(*divmod(self.time_left, 60))
         self.time_str.set(sf)
         # Remove the button
@@ -76,14 +77,12 @@ class Testing(tk.Tk):
             print(self.time_left)
             # break
 
-        # Remove a second from the time
-        self.time_left -= 1
-
-        # delay one second
-        self.after(1000, self.count_down)
-
-        # threading.Timer(60, self.count_down()).start()
-        # self.after(1000, self.count_down(self.time_left))
+        # If the timer is running keep counting down
+        if self.timer_running:
+            # Remove a second from the time
+            self.time_left -= 1
+            # Delay one second
+            self.after(1000, self.count_down)
 
     def start_count_down(self):
         # Remove the text from the input field
@@ -100,8 +99,10 @@ class Testing(tk.Tk):
         self.check_answer(self.entry_variable.get())
 
     def time_up(self):
+        # Stop the time and show feedback
         self.entry.configure(state="disabled")
         self.entry_variable.set("TIME IS UP!")
+        self.timer_running = False
 
     def check_answer(self, answer):
         # Make sure the time has not passed yet
@@ -132,6 +133,7 @@ class Testing(tk.Tk):
         # Set focus on the entry field
         self.entry.focus_set()
         self.entry.selection_range(0, tk.END)
+
 
 if __name__ == "__main__":
     app = Testing(None)
