@@ -79,7 +79,6 @@ class Testing(tk.Tk):
         # Remove a second from the time
         self.time_left -= 1
 
-        print self.time_left
         # delay one second
         self.after(1000, self.count_down)
 
