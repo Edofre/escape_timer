@@ -98,7 +98,7 @@ class Testing(tk.Tk):
         # Make sure the time has not passed yet
         if self.time_left >= 0:
             if answer.lower() == __escape_timer_key__:
-                self.result_label_variable.set("CORRECT!")
+                self.result_label_variable.set("Congratulations, you have escaped!")
                 # self.result_label.config(fg='green')
                 self.result_label.configure(fg='green')
 
