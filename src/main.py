@@ -107,7 +107,7 @@ class Testing(tk.Tk):
                 self.entry.configure(state="disabled")
             else:
                 self.result_label_variable.set("!!")
-                self.result_label_variable.set("WRONG! " + str(self.time_left))
+                self.result_label_variable.set("WRONG!")
                 # Remove a minute from the time, we do not tolerate failure
                 # self.count_down(self.time_left - 60)
                 # calculated_time_left = self.time_left - 60
