@@ -7,14 +7,15 @@ Basic countdown app to facilitate an escape room type project
 '''
 
 import Tkinter as tk
-
+import threading
 
 class Testing(tk.Tk):
     def __init__(self, parent):
         tk.Tk.__init__(self, parent)
         self.parent = parent
         self.initialize()
-        self.time_left = 0
+        # Set the time left
+        self.time_left = 3600
         self.timer_running = True
 
     def initialize(self):
@@ -28,7 +29,7 @@ class Testing(tk.Tk):
                                     fg='red', relief='raised', bd=3).pack(fill='x', padx=10, pady=10)
 
         # Create the start timer button, remove it after it's clicked
-        self.start_button = tk.Button(self, text='Count Start', command=self.count_down)
+        self.start_button = tk.Button(self, text='Count Start', command=self.start_count_down)
         self.start_button.pack()
 
         # Set the font for the label and input
@@ -57,31 +58,39 @@ class Testing(tk.Tk):
         self.update()
 
     # start with 60 minutes --> 3600 seconds
-    def count_down(self, start_time=3600):
+    def count_down(self):
+        # Reset the time left because we're entering the loop again
+        # for self.time_left in range(start_time, -1, -1):
+            # format as 2 digit integers, fills with zero to the left, divmod() gives minutes, seconds
+        sf = "{:02d}:{:02d}".format(*divmod(self.time_left, 60))
+        self.time_str.set(sf)
+        # Remove the button
+        self.start_button.destroy()
+        # Update the time
+        # self.self.time_str.update()
+        if self.time_left <= 0:
+            self.time_up()
+            # break
 
+        if not self.timer_running:
+            print(self.time_left)
+            # break
+
+        # Remove a second from the time
+        self.time_left -= 1
+
+        print self.time_left
+        # delay one second
+        self.after(1000, self.count_down)
+
+        # threading.Timer(60, self.count_down()).start()
+        # self.after(1000, self.count_down(self.time_left))
+
+    def start_count_down(self):
         # Remove the text from the input field
         self.entry_variable.set("")
-
-        # Reset the time left because we're entering the loop again
-        self.time_left = 0
-
-        for self.time_left in range(start_time, -1, -1):
-            # format as 2 digit integers, fills with zero to the left, divmod() gives minutes, seconds
-            sf = "{:02d}:{:02d}".format(*divmod(self.time_left, 60))
-            self.time_str.set(sf)
-            # Remove the button
-            self.start_button.destroy()
-            self.update()
-            # delay one second
-            self.after(60)
-
-            if self.time_left <= 0:
-                self.time_up()
-                break
-
-            if not self.timer_running:
-                print(self.time_left)
-                break
+        # Actually start the countdown
+        self.count_down()
 
     def on_click(self):
         # Process the answer
@@ -115,7 +124,8 @@ class Testing(tk.Tk):
                 # self.count_down(self.time_left - 60)
                 # calculated_time_left = self.time_left - 60
                 # self.count_down(0 if calculated_time_left < 0 else calculated_time_left)
-                self.entry_variable.set("")
+                # Don't remove the old answer because they might have to type a lot again
+                # self.entry_variable.set("")
         else:
             # And disable the textfield
             self.time_up()
