@@ -103,8 +103,8 @@ class Testing(tk.Tk):
                 self.result_label_variable.set("WRONG! " + str(self.time_left))
                 # Remove a minute from the time, we do not tolerate failure
                 # self.count_down(self.time_left - 60)
-                calculated_time_left = self.time_left - 60
-                self.count_down(0 if calculated_time_left < 0 else calculated_time_left)
+                # calculated_time_left = self.time_left - 60
+                # self.count_down(0 if calculated_time_left < 0 else calculated_time_left)
                 self.entry_variable.set("")
         else:
             # And disable the textfield
