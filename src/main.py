@@ -1,6 +1,6 @@
 __author__ = 'Edo Freriks'
 __app_name__ = 'Escape Group Finance & Risk'
-__escape_timer_key__ = 'asdasd'
+__escape_timer_key__ = '2832232efdccbh'
 
 '''
 Basic countdown app to facilitate an escape room type project
@@ -23,19 +23,22 @@ class Testing(tk.Tk):
 
         self.time_str = tk.StringVar()
         # create the time display label, give it a large font, label auto-adjusts to the font
-        label_font = ('helvetica', 40)
-        self.timer_label = tk.Label(self, textvariable=self.time_str, font=label_font, bg='white',
-                                    fg='red', relief='raised', bd=3).pack(fill='x', padx=5, pady=5)
+        timer_font = ('helvetica', 140)
+        self.timer_label = tk.Label(self, textvariable=self.time_str, font=timer_font, bg='white',
+                                    fg='red', relief='raised', bd=3).pack(fill='x', padx=10, pady=10)
 
         # Create the start timer button, remove it after it's clicked
         self.start_button = tk.Button(self, text='Count Start', command=self.count_down)
         self.start_button.pack()
 
+        # Set the font for the label and input
+        label_font = ('helvetica', 60)
+
         # Label that contains the explanation
         self.explanation_label_variable = tk.StringVar()
-        tk.Label(self, textvariable=self.explanation_label_variable).pack()
+        tk.Label(self, textvariable=self.explanation_label_variable, font=label_font).pack()
         self.explanation_label_variable.set(
-            "Press 'Enter' to enter the code and stop the timer. \n If the code is not correct you will lose time!")
+            "Press 'Enter' to enter the code and stop the timer.")
 
         # The label that will show the result
         self.result_label_variable = tk.StringVar()
@@ -44,8 +47,8 @@ class Testing(tk.Tk):
 
         # Create the password field
         self.entry_variable = tk.StringVar()
-        self.entry = tk.Entry(self, textvariable=self.entry_variable)
-        self.entry.pack()
+        self.entry = tk.Entry(self, textvariable=self.entry_variable, font=label_font)
+        self.entry.pack(pady=20)
         self.entry.bind("<Return>", self.on_enter)
         self.entry_variable.set(u"Enter password here.")
 
@@ -54,6 +57,10 @@ class Testing(tk.Tk):
 
     # start with 60 minutes --> 3600 seconds
     def count_down(self, start_time=3600):
+
+        # Remove the text from the input field
+        self.entry_variable.set("")
+
         # Reset the time left because we're entering the loop again
         self.time_left = 0
 
@@ -90,7 +97,7 @@ class Testing(tk.Tk):
     def check_answer(self, answer):
         # Make sure the time has not passed yet
         if self.time_left >= 0:
-            if answer == __escape_timer_key__:
+            if answer.lower() == __escape_timer_key__:
                 self.result_label_variable.set("CORRECT!")
 
                 # Stop the time! TODO
