@@ -96,7 +96,6 @@ class Testing(tk.Tk):
         if self.time_left >= 0:
             if answer.lower() == __escape_timer_key__:
                 self.result_label_variable.set("Congratulations, you have escaped!")
-                # self.result_label.config(fg='green')
                 self.result_label.configure(fg='green')
 
                 # Stop the time!
@@ -107,12 +106,9 @@ class Testing(tk.Tk):
             else:
                 self.result_label_variable.set("!!")
                 self.result_label_variable.set(self.entry_variable.get() + " is wrong!")
-                # Remove a minute from the time, we do not tolerate failure
-                # self.count_down(self.time_left - 60)
-                # calculated_time_left = self.time_left - 60
-                # self.count_down(0 if calculated_time_left < 0 else calculated_time_left)
-                # Don't remove the old answer because they might have to type a lot again
-                # self.entry_variable.set("")
+
+                # Remove a minute from the time, we do not tolerate failure,
+                # self.time_left -= 60
         else:
             # And disable the textfield
             self.time_up()
